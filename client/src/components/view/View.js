@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import Request from "../../utils/Request";
 
 class View extends Component {
     constructor(props) {

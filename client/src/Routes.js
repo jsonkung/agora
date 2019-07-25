@@ -13,7 +13,7 @@ const AppRouter = function() {
         <Router>
             <Switch>
                 <Route path="/" exact component={ Overview } public={true} />
-                <Route path="/post" component={ Post } public={true} />
+                <Route path="/post" exact component={ Post } public={true} />
                 <Route path="/view/:post_id" component={ View } public={true} />
                 <Route component={ Page404 } />
             </Switch>
