@@ -6,9 +6,9 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-                <div className="content">
+                <h1 className="content">
                     Agora
-                </div>
+                </h1>
             </div>
         );
     }
