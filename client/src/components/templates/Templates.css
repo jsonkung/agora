@@ -1,0 +1,37 @@
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.page > .content {
+    display: flex;
+    flex-direction: column;
+    flex: 20 20 auto;
+}
+
+.page > .header {
+    background-color: #D32323;
+    display: flex;
+    flex: 5 5 auto;
+}
+
+.header > .content {
+    margin: auto;
+    text-align: center;
+}
+
+.page > .footer {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.footer > .content {
+    margin: auto;
+    text-align: center;
+    flex: 10 10 auto;
+}
+
+.footer > .ui.divider {
+    flex: 1 1 auto;
+}

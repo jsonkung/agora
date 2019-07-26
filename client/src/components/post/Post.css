@@ -1,0 +1,24 @@
+form {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+form > .column {
+    flex: 1 1 auto;
+}
+
+form > .content {
+    flex: 2 2 auto;
+}
+
+.content > .title {
+    text-align: center;
+    margin: auto;
+}
+
+.content .ui.header {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 20px;
+}
