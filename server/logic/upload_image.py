@@ -1,13 +1,10 @@
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+import StringIO
 import logging as log
 import uuid
 
 from botocore.exceptions import BotoCoreError
 
-from app.s3_client import get_s3_client
+from server.s3_client import get_s3_client
 
 
 # TODO: Add a retry decorator
