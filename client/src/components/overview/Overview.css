@@ -1,0 +1,14 @@
+.navigators {
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigators > .input {
+    flex-basis: 70%;
+    padding-right: 10px;
+}
+
+.navigators > .button {
+    padding-left: 10px;
+}

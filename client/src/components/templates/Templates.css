@@ -3,16 +3,10 @@
     flex-direction: column;
 }
 
-.page > .content {
-    display: flex;
-    flex-direction: column;
-    flex: 20 20 auto;
-}
-
 .page > .header {
     background-color: #D32323;
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 10%;
     min-height: 100px;
 }
 
@@ -24,16 +18,30 @@
 .page > .footer {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
+    flex: 1 1 5%;
 }
 
 .footer > .content {
     margin: auto;
     text-align: center;
-    flex: 10 10 auto;
+    flex: 10 10 85%;
     padding-bottom: 15px;
 }
 
 .footer > .ui.divider {
     flex: 1 1 auto;
+}
+
+.page > .content {
+    display: flex;
+    flex-direction: row;
+    flex: 20 20 auto;
+}
+
+.content > .column {
+    flex: 1 1 25%;
+}
+
+.content > :not(.column) {
+    flex: 1 1 50%;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
-import { Form, Button, Divider, Image } from "semantic-ui-react";
-import 'semantic-ui-css/semantic.min.css';
+import { Form, Button, Divider, Image, Header } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import "./Post.css";
 import Request from "../../utils/Request";
 
@@ -15,9 +15,22 @@ class PostForm extends Component {
             description: "",
             price: "",
             contactEmail: "",
+            location: "",
+            category: "",
+            startDate: 0,
+            endDate: 0,
             selectedImage: null,
             selectedImageURL: "",
             images: []
+        }
+
+        this.error = {
+            title: false,
+            description: false,
+            price: false,
+            contactEmail: false,
+            location: false,
+            category: false
         }
     }
 
@@ -30,6 +43,14 @@ class PostForm extends Component {
             }
         } else {
             this.setState({ [name]: value })
+        }
+
+        if (name in this.error) {
+            if (value) {
+                this.error[name] = false;
+            } else {
+                this.error[name] = true;
+            }
         }
         
     }
@@ -60,19 +81,45 @@ class PostForm extends Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state);
+
         let parameters = {
             method: "POST",
             endpoint: "",
             data: this.state
         }
+        let containsError = false;
+        for (let key in this.state) {
+            if (key in this.error) {
+                if (this.state[key]) {
+                    this.error[key] = false;
+                } else {
+                    containsError = true;
+                    this.error[key] = true;
+                }
+            }
+        }
+
+        if (this.state.price) {
+            let priceFormat = /^[0-9]+(\.\d{2})?$/;
+            if (!priceFormat.test(this.state.price)) {
+                this.error.price = true;
+                containsError = true;
+            }
+        }
+
+        if (containsError) {
+            this.forceUpdate();
+            return;
+        }
+
+        console.log(this.state);
 
         // new Request(parameters)
         //     .then();
     }
 
     render() {
-        const { title, description, price, contactEmail, selectedImage, images } = this.state;
+        const { title, description, price, contactEmail } = this.state;
         const imagePreview = this.state.selectedImageURL ? (
             <Form.Group>
                 <Divider hidden />
@@ -88,16 +135,57 @@ class PostForm extends Component {
         ) : (
             null
         );
+
+        const locationOptions = [
+            {
+                key: "sfo",
+                value: "sfo",
+                text: "SFO"
+            },
+            {
+                key: "ny",
+                value: "ny",
+                text: "NY"
+            }
+        ];
+
+        const categoryOptions = [
+            {
+                key: "tickets",
+                value: "tickets",
+                text: "Tickets"
+            },
+            {
+                key: "home",
+                value: "home",
+                text: "Home"
+            },
+            {
+                key: "electronic",
+                value: "electronic",
+                text: "Electronic"
+            },
+            {
+                key: "appliances",
+                value: "appliances",
+                text: "Appliances"
+            }
+        ];
         
         return (
             <Form>
+                <Header as="h2" floated="left">
+                    Post Details
+                </Header>
+                <Divider clearing />
                 <Form.Group widths="equal">
                     <Form.Input
                         placeholder="Title"
                         name="title"
-                        label="Title"
+                        label="Title *"
                         value={ title }
                         onChange={ this.handleChange }
+                        error={ this.error.title }
                     />
                 </Form.Group>
 
@@ -105,34 +193,74 @@ class PostForm extends Component {
                     <Form.TextArea
                         placeholder="Description"
                         name="description"
-                        label="Description"
+                        label="Description *"
                         value={ description }
                         onChange={ this.handleChange }
+                        error={ this.error.description }
                     />
                 </Form.Group>
 
+                <Header as="h2" floated="left">
+                    Item Details
+                </Header>
+                <Divider clearing />
                 <Form.Group widths="equal">
-                    <Form.Input
-                        name="contactEmail"
-                        label="Contact Email"
-                        value={ contactEmail }
-                        placeholder="Contact Email"
+                    <Form.Dropdown
+                        search
+                        selection
+                        options={ categoryOptions }
+                        placeholder="Category"
+                        label="Category *"
+                        name="category"
                         onChange={ this.handleChange }
+                        error={ this.error.category }
                     />
+
                     <Form.Input
                         name="price"
-                        label="Price"
+                        label="Price *"
                         value={ price }
                         iconPosition="left"
                         icon="dollar sign"
                         placeholder="0.00"
                         onChange={ this.handleChange }
+                        error={ this.error.price }
                     />
                 </Form.Group>
 
+                <Header as="h2" floated="left">
+                    Contact Details
+                </Header>
+                <Divider clearing />
+                <Form.Group widths="equal">
+                    <Form.Input
+                        name="contactEmail"
+                        label="Contact Email *"
+                        value={ contactEmail }
+                        placeholder="Contact Email"
+                        onChange={ this.handleChange }
+                        error={ this.error.contactEmail }
+                    />
+
+                    <Form.Dropdown
+                        search
+                        selection
+                        options={ locationOptions }
+                        placeholder="Location"
+                        label="Location *"
+                        name="location"
+                        onChange={ this.handleChange }
+                        error={ this.error.location }
+                    />
+                    
+                </Form.Group>
+
+                <Header as="h2" floated="left">
+                    Images
+                </Header>
+                <Divider clearing />
 
                 { imagePreview }
-                
 
                 <Form.Group widths="equal">
                     <Form.Input
@@ -140,8 +268,6 @@ class PostForm extends Component {
                         accept=".png,.jpg,.jpeg"
                         onChange={ this.handleImageChange }
                     />
-
-
                 </Form.Group>
 
                 <Button

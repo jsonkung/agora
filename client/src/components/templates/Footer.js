@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import { Divider } from "semantic-ui-react";
-import 'semantic-ui-css/semantic.min.css';
+import "semantic-ui-css/semantic.min.css";
 import "./Templates.css";
 
 

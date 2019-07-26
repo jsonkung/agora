@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import Content from "./Content";
 import "./Templates.css";
 
 class Page extends Component {
@@ -9,9 +10,9 @@ class Page extends Component {
         return (
             <div className="page">
                 <Header />
-                <div className="content">
-                    { this.props.children }    
-                </div>
+                <Content>
+                    { this.props.children }
+                </Content>
                 <Footer />
             </div>
         );
